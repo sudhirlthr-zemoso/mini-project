@@ -18,13 +18,29 @@ CREATE SCHEMA IF NOT EXISTS `amazon` DEFAULT CHARACTER SET latin1 ;
 USE `amazon` ;
 
 -- -----------------------------------------------------
--- Table `amazon`.`applicationuser`
+-- Table `amazon`.`product`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `amazon`.`applicationuser` (
-  `applicationUserID` INT(11) NOT NULL,
-  `applicationUserEmail` VARCHAR(45) NULL DEFAULT NULL,
-  `applicationUserPassword` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`applicationUserID`))
+CREATE TABLE IF NOT EXISTS `amazon`.`product` (
+  `id` INT(11) NOT NULL,
+  `title` VARCHAR(50) NOT NULL,
+  `description` VARCHAR(200) NOT NULL,
+  `rating` INT(11) NULL DEFAULT NULL,
+  `available` TINYINT(4) NOT NULL,
+  `deliverytime` INT(11) NOT NULL,
+  `Imageurl` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `amazon`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `amazon`.`user` (
+  `id` INT(11) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -33,41 +49,39 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `amazon`.`cart`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `amazon`.`cart` (
-  `cartID` INT(11) NOT NULL,
-  `cartProductID` INT(11) NOT NULL,
-  `cartUserID` INT(11) NOT NULL,
-  PRIMARY KEY (`cartID`),
-  INDEX `cartUserID` (`cartUserID` ASC) VISIBLE)
+  `id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `product_id` (`product_id` ASC) VISIBLE,
+  INDEX `user_id` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `cart_ibfk_1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `amazon`.`product` (`id`),
+  CONSTRAINT `cart_ibfk_2`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `amazon`.`user` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `amazon`.`product`
+-- Table `amazon`.`order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `amazon`.`product` (
-  `productID` INT(11) NOT NULL,
-  `productTitle` VARCHAR(50) NOT NULL,
-  `productDescription` VARCHAR(200) NOT NULL,
-  `productRating` INT(11) NULL DEFAULT NULL,
-  `productAvailable` TINYINT(4) NOT NULL,
-  `productDeliveryTime` INT(11) NOT NULL,
-  `productImageUrl` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`productID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `amazon`.`purchase`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `amazon`.`purchase` (
-  `purchaseID` INT(11) NOT NULL,
-  `purchaseDate` DATE NOT NULL,
-  `purchaseUser` INT(11) NOT NULL,
-  `purchaseProductID` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`purchaseID`),
-  INDEX `purchaseUser` (`purchaseUser` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `amazon`.`order` (
+  `id` INT(11) NOT NULL,
+  `date` DATE NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_id` (`user_id` ASC) VISIBLE,
+  INDEX `product_id` (`product_id` ASC) VISIBLE,
+  CONSTRAINT `order_ibfk_1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `amazon`.`user` (`id`),
+  CONSTRAINT `order_ibfk_2`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `amazon`.`product` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
