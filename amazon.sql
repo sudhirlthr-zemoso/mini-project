@@ -18,9 +18,9 @@ CREATE SCHEMA IF NOT EXISTS `amazon` DEFAULT CHARACTER SET latin1 ;
 USE `amazon` ;
 
 -- -----------------------------------------------------
--- Table `amazon`.`applicationUser`
+-- Table `amazon`.`applicationuser`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `amazon`.`applicationUser` (
+CREATE TABLE IF NOT EXISTS `amazon`.`applicationuser` (
   `applicationUserID` INT(11) NOT NULL,
   `applicationUserEmail` VARCHAR(45) NULL DEFAULT NULL,
   `applicationUserPassword` VARCHAR(45) NULL DEFAULT NULL,
