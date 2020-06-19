@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `amazon`.`product` (
   `rating` INT(11) NULL DEFAULT NULL,
   `available` TINYINT(4) NOT NULL,
   `delivery_in_days` INT(11) NOT NULL,
-  `Image_url` VARCHAR(200) NOT NULL,
+  `image_url` VARCHAR(200) NOT NULL,
   `available_quantity` INT(11) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -74,16 +74,11 @@ CREATE TABLE IF NOT EXISTS `amazon`.`order` (
   `id` INT(11) NOT NULL,
   `date` DATE NOT NULL,
   `user_id` INT(11) NOT NULL,
-  `product_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `user_id` (`user_id` ASC) VISIBLE,
-  INDEX `product_id` (`product_id` ASC) VISIBLE,
   CONSTRAINT `order_ibfk_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `amazon`.`user` (`id`),
-  CONSTRAINT `order_ibfk_2`
-    FOREIGN KEY (`product_id`)
-    REFERENCES `amazon`.`product` (`id`))
+    REFERENCES `amazon`.`user` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
