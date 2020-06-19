@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `amazon`.`product` (
   `id` INT(11) NOT NULL,
   `title` VARCHAR(50) NOT NULL,
   `description` VARCHAR(200) NOT NULL,
-  `rating` INT(11) NULL DEFAULT NULL,
+  `rating` BIT(1) NULL DEFAULT NULL,
   `available` TINYINT(4) NOT NULL,
   `delivery_in_days` INT(11) NOT NULL,
   `image_url` VARCHAR(200) NOT NULL,
